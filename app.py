@@ -1,48 +1,30 @@
+import os
 import dash
+import flask
 import dash_core_components as dcc
 import dash_html_components as html
 from datetime import datetime as dt
 
 
-class MyDash(dash.Dash):
-    def index(self, *args, **kwargs):
-        scripts = self._generate_scripts_html()
-        css = self._generate_css_dist_html()
-        config = self._generate_config_html()
-        title = getattr(self, 'title', 'Dash')
-        return ('''
-        <!DOCTYPE html>
-        <html style="background-color: black;">
-            <head>
-                <meta charset="UTF-8"/>
-                <title>{}</title>
-                {}
-            </head>
-            <body>
-                <div id="react-entry-point">
-                    <div class="_dash-loading">
-                        Loading...
-                    </div>
-                </div>
-            </body>
+STATIC_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 
-            <footer>
-                {}
-                {}
-            </footer>
-        </html>
-        '''.format(title, css, config, scripts))
+app = dash.Dash()
 
 
-app = MyDash()
+@app.server.route('/static/<resource>')
+def serve_static(resource):
+    return flask.send_from_directory(STATIC_PATH, resource)
+
 
 colors = {
     'background': '#111111',
     'text': '#7FDBFF'
 }
 
-#app.css.append_css({"external_url": 'https://codepen.io/chriddyp/pen/bWLwgP.css'})
-app.css.append_css({"external_url": './some.css'})
+app.css.append_css({
+    "external_url": "static/some.css"
+})
+
 app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
 [
     html.H1(children='Interactive Stock Predictor', style={'textAlign': 'center', 'color': colors['text']}),
