@@ -1,12 +1,11 @@
+html {
+    color: white;
+}
+
 body {
     background-color: #2F2F2F;
 }
 
 h1 {
     color: rgb(224, 189, 111);
-}
-
-#description {
-    color: rgb(241, 241, 241);
-    margin-bottom: 3em;
 }

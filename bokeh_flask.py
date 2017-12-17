@@ -13,14 +13,24 @@ app = Flask(__name__)
 
 
 def modify_doc(doc):
+    """
     df = pd.read_csv('data/tsla.csv')[['Date', 'Adj Close']]
     df.set_index('Date', inplace=True)
     # source = ColumnDataSource(data=df)
     plot = figure(x_axis_type='datetime', y_range=(15, 300), y_axis_label='Adj Close',
                   title="Adjusted Close Price")
     plot.line([datetime.strptime(d, '%Y-%m-%d') for d in df.index], list(df['Adj Close']))
+    """
 
-    doc.add_root(plot)
+    from bokeh.sampledata.stocks import AAPL
+    df = pd.DataFrame(AAPL)
+    df['date'] = pd.to_datetime(df['date'])
+
+    # create a new plot with a datetime axis type
+    p = figure(plot_width=800, plot_height=250, x_axis_type="datetime")
+    p.line(df['date'], df['close'], color='navy', alpha=0.5)
+
+    doc.add_root(p)
     doc.theme = Theme(filename="theme.yaml")
 
 
