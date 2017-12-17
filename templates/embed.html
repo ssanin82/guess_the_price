@@ -1,0 +1,24 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Embedding a Bokeh Server With {{ framework }}</title>
+  <link href="static/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <h1>
+    Stock Prediction
+  </h1>
+  <div id='description'>
+    Given a set of stock names, and two date ranges, it should predict stock movement for the second date range, given informaion in the first range.
+  </div>
+  <div style="width: 100%; display: table;">
+    <div style="display: table-row">
+        <div style="display: table-cell;">{{ script|safe }}</div>
+        <div style="display: table-cell;">{{ script|safe }}</div>
+    </div>
+</div>
+</body>
+</html>
